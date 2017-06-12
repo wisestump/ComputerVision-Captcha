@@ -31,3 +31,77 @@
 * inv - скорость обучения имеет вид: base_lr * (1 + gamma * iter) ^ (- power)
 
 Для сетей VGG16 и Resnet-50 были использованы обученные модели с целью их дообучения, однако эти модели нельзя было использовать на полутоновых выборках из-за несовпадения размерностей сетей в этих случаях. 
+
+## Обучающая выборка
+
+Обучающая выборка на первых этапах состояла из картинок, содержащих один символ и градиентный фон. Размер выборок был небольшим (в пределах 3-5 тысяч изображений, около 50 примеров на один символ). В выборку были также включены избражения без искажений. Сначала по одному, в дальнейшем до половины примеров одного символа. В качестве генератора капч был выбран [SimpleCaptcha](http://simplecaptcha.sourceforge.net/)
+
+Были использованы следующие искажения:
+
+- Сдвиг (shear)
+
+  ![shear1](img/all-kinds-of-noise/0.png)
+  ![shear2](img/all-kinds-of-noise/1.png)
+
+- Кривые
+
+  ![noise1](img/all-kinds-of-noise/2.png)
+  ![noise2](img/all-kinds-of-noise/3.png)
+  
+- "Рыбий глаз" + сетка
+
+  ![fisheye1](img/all-kinds-of-noise/4.png)
+  ![fisheye2](img/all-kinds-of-noise/5.png)
+
+- Закручивание (twirl)
+
+  ![twirl1](img/all-kinds-of-noise/6.png)
+  ![twirl2](img/all-kinds-of-noise/7.png)
+
+- Распыление (diffusion)
+
+  ![diffuse1](img/all-kinds-of-noise/8.png)
+  ![diffuse2](img/all-kinds-of-noise/9.png)
+
+Следующие выборки включали в себя минимум искажений, но содержали несколько шрифтов:
+
+![font1](img/font-variation/0.png)
+![font2](img/font-variation/1.png)
+![font3](img/font-variation/2.png)
+![font4](img/font-variation/3.png)
+![font5](img/font-variation/4.png)
+![font6](img/font-variation/5.png)
+![font7](img/font-variation/6.png)
+![font8](img/font-variation/7.png)
+![font9](img/font-variation/8.png)
+![font10](img/font-variation/9.png)
+![font11](img/font-variation/10.png)
+
+Обучающая выборка для CaptchaNet состояла из картинок с текстом длины 6, с одним шрифтом, шумом в виде линии и точек и искажениями символов:
+
+![pygen](img/python-gen/0.png)
+
+![pygen](img/python-gen/1.png)
+
+![pygen](img/python-gen/2.png)
+
+![pygen](img/python-gen/3.png)
+
+Размер выборки составлял 200000 изображений.
+
+Добавочная к данной выборка, на которой в дальнейшем дообучалась сеть, включала в себя изображения из шести символов с одним шрифтом и искажениями diffuse и twirl:
+
+
+![6sym](img/6-symbols/0.png)
+
+![6sym](img/6-symbols/1.png)
+
+![6sym](img/6-symbols/2.png)
+
+![6sym](img/6-symbols/3.png)
+
+![6sym](img/6-symbols/4.png)
+
+![6sym](img/6-symbols/5.png)
+
+![6sym](img/6-symbols/6.png)
