@@ -65,7 +65,7 @@ namespace CaptchaBreaker
                 var outLines = classifierOut.Split(new [] {"\r", "\r\n", "\n"},
                     StringSplitOptions.RemoveEmptyEntries);
                 label1.Text = outLines[0];
-                infoForm.textBox1.Text = string.Concat(outLines.Skip(1));
+                infoForm.textBox1.Text = string.Join(Environment.NewLine, outLines.Skip(1));
             }
         }
 
