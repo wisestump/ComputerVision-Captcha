@@ -15,11 +15,13 @@ namespace CaptchaBreaker
         Image image;
         string openedImage;
         InfoForm infoForm;
+        Classifier classifier;
         public Form1()
         {
             InitializeComponent();
             infoForm = new InfoForm();
-            
+            classifier = new Classifier("../../../Classifier/network", "../../../Classifier");
+
         }
 
         private void Form1_DragEnter(object sender, DragEventArgs e)
@@ -51,8 +53,14 @@ namespace CaptchaBreaker
             catch (Exception ex)
             {
                 MessageBox.Show(string.Format("Error opening file: {0}", ex.Message));
+                return;
             }
-
+            
+            var classifierOut = classifier.Classify(file);
+            var outLines = classifierOut.Split(new[] { "\r", "\r\n", "\n" },
+                StringSplitOptions.RemoveEmptyEntries);
+            label1.Text = outLines[0];
+            infoForm.textBox1.Text = string.Join(Environment.NewLine, outLines.Skip(1));
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -60,12 +68,7 @@ namespace CaptchaBreaker
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 OpenImage(openFileDialog1.FileName);
-                var classifier = new Classifier("../../../Classifier/network", "../../../Classifier");
-                var classifierOut = classifier.Classify(openFileDialog1.FileName);
-                var outLines = classifierOut.Split(new [] {"\r", "\r\n", "\n"},
-                    StringSplitOptions.RemoveEmptyEntries);
-                label1.Text = outLines[0];
-                infoForm.textBox1.Text = string.Join(Environment.NewLine, outLines.Skip(1));
+                
             }
         }
 

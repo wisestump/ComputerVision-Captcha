@@ -31,7 +31,7 @@ namespace CaptchaBreaker
         {
             var process =
                 Process.Start(
-                    new ProcessStartInfo(classifierPath + "/classification.exe", $"{proto} {model} {means} {labels} \"{picPath}\"")
+                    new ProcessStartInfo(classifierPath + "/classification.exe", $"\"{proto}\" \"{model}\" \"{means}\" \"{labels}\" \"{picPath}\"")
                     {
                         RedirectStandardOutput = true,
                         RedirectStandardError = true,
@@ -39,7 +39,8 @@ namespace CaptchaBreaker
                         CreateNoWindow = true
                     });
 
-            var output = process.StandardOutput.ReadToEnd();
+            var output = string.Format("{0}{1}", process.StandardOutput.ReadToEnd(), process.StandardError.ReadToEnd());
+
             process.WaitForExit();
 
             return output;
