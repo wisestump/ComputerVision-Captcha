@@ -58,7 +58,15 @@ namespace CaptchaBreaker
         private void button1_Click(object sender, EventArgs e)
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
                 OpenImage(openFileDialog1.FileName);
+                var classifier = new Classifier("../../../Classifier/network", "../../../Classifier");
+                var classifierOut = classifier.Classify(openFileDialog1.FileName);
+                var outLines = classifierOut.Split(new [] {"\r", "\r\n", "\n"},
+                    StringSplitOptions.RemoveEmptyEntries);
+                label1.Text = outLines[0];
+                infoForm.textBox1.Text = string.Concat(outLines.Skip(1));
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
